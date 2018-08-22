@@ -1,0 +1,10 @@
+{
+    "HOST": "IP address or DNS name of your taret BigIP",
+    "USER": "your big ip username",
+    "PASS": "your big ip password",
+    "KEY":  "path to your ssh key",
+    "AWS_CREDENTIALS": {
+        "accessKeyId": "",
+        "secretAccessKey": ""
+    }
+}
