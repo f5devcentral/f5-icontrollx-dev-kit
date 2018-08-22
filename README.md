@@ -49,9 +49,11 @@ One the ffdk command is aliased or added to your path, you are ready to create a
 
 The initialize a new project, create a new directory and initialize te project inside that directory:
 
-`mkdir hello_world`
-`cd hello_world`
-`ffdk init`
+```
+$ mkdir hello_world
+$ cd hello_world
+$ffdk init
+```
 
 
 This will create the appropriate file hierarchy, create some basic configuration files, and run npm init.
