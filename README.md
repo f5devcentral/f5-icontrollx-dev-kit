@@ -68,18 +68,14 @@ This will create the appropriate file hierarchy, create some basic configuration
 ```
 
 
-The devconfig.json file looks like this, and may be different for each developer. This file should _not_ be committed to our VCS/SCM as it contains credential information. The first time you load a project on a new development machine, this file will need to be created or populated. 
+The devconfig.json file looks like this, and may be different for each developer. This file should _not_ be committed to your VCS/SCM as it contains credential information. The first time you load a project on a new development machine, this file will need to be created or populated. 
 
 ```
 {
-    "HOST": "IP address or DNS name of your taret BigIP",
+    "HOST": "IP address or DNS name of your target BigIP",
     "USER": "your big ip username",
     "PASS": "your big ip password",
-    "KEY":  "path to your ssh key",
-    "AWS_CREDENTIALS": {
-        "accessKeyId": "",
-        "secretAccessKey": ""
-    }
+    "KEY":  "path to your ssh key"
 }
 ```
 
