@@ -9,9 +9,13 @@ The purpose of this project is to streamline the initial steps in creating and d
 
 ffdk has commands to initialize, build, and deploy a project to development BigIP.
 
-First clone this repo:
+Prerequisite:
 
-`git clone git://RMEOTE_REPO_URL`
+`rpmbuild` must be installed on the development machine.
+
+Clone the repo:
+
+`git clone git://REMOTE_REPO_URL`
 
 Next, add ffdk command, this can be achieved in one of two ways:
 
