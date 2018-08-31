@@ -1,14 +1,14 @@
-Summary: F5 Application Services 3.0 Extension
-Name: f5-project
-Version: 0.0.1
+Summary: %{_ilx_name} %{_ilx_version}
+Name: %{_ilx_name}
+Version: %{_ilx_version}
 Release: %{_release}
 BuildArch: noarch
 Group: Development/Tools
-License: Commercial
-Packager: F5 Networks <support@f5.com>
+License: %{_ilx_license}
+Packager: %{_ilx_author}
 
 %description
-F5 iControl LX Application
+%{_ilx_description}
 
 %define IAPP_INSTALL_DIR /var/config/rest/iapps/%{name}
 
