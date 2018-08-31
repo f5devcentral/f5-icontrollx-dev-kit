@@ -1,5 +1,5 @@
 Summary: F5 Application Services 3.0 Extension
-Name: f5-serverless
+Name: f5-project
 Version: 0.0.1
 Release: %{_release}
 BuildArch: noarch
@@ -8,7 +8,7 @@ License: Commercial
 Packager: F5 Networks <support@f5.com>
 
 %description
-F5 serverless module for calling lambda functions from BigIP REST
+F5 iControl LX Application
 
 %define IAPP_INSTALL_DIR /var/config/rest/iapps/%{name}
 
