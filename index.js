@@ -6,7 +6,7 @@ const run = () => {
     const args = process.argv.slice(2);
     console.log(args);
 
-    const op = args.pop();
+    const op = args.shift();
 
     const ops = {
         init: util.initialize_project,
@@ -15,7 +15,7 @@ const run = () => {
     };
 
     if( ops[op] instanceof Function )
-        ops[op]();
+        ops[op](args);
     else
         console.error(`invalid operation: ${op}`);        
 };
