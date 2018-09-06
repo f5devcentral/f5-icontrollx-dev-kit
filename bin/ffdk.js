@@ -21,13 +21,9 @@ const devConfig = (() => {
         return {};
     }
 })();
-console.log(devConfig);
 
 const args = process.argv.slice(2);
-console.log(args);
-
 const op = args.shift();
-console.log(op);
 
 const ops = {
     init: (args) => {
