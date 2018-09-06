@@ -12,7 +12,9 @@ const op = args.shift();
 const ops = {
   init: ffdk.initializeProject,
   build: ffdk.buildRpm,
-  deploy: ffdk.deployToBigIp
+  deploy: ffdk.deployToBigIp,
+  query: ffdk.queryInstalledPackages,
+  uninstall: ffdk.uninstallPackage
 };
 
 if( ops[op] instanceof Function )
