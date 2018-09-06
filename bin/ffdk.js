@@ -10,9 +10,9 @@ console.log(args);
 const op = args.shift();
 
 const ops = {
-  init: ffdk.initialize_project,
-  build: ffdk.build_rpm,
-  deploy: ffdk.deploy_to_bigip
+  init: ffdk.initializeProject,
+  build: ffdk.buildRpm,
+  deploy: ffdk.deployToBigIp
 };
 
 if( ops[op] instanceof Function )
