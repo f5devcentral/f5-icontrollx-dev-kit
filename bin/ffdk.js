@@ -70,20 +70,34 @@ const ops = {
             return ffdk.fetchLatestBuild('./build');
         })();
 
-        const opts = {};
-        opts.rpmPath = target_build;
-        Object.keys(devConfig).forEach((key) => { opts[key] = devConfig[key] });
-        ffdk.deployToBigIp(opts);
+        console.log(`Deploying ${target_build}`);
+        const progress = ffdk.deployToBigIp(devConfig, target_build, (err) => {
+            if (err) {
+                console.error(err);
+            } else {
+                console.log(`Deployed ${target_build} successfully.`);
+            }
+        });
+
+        progress.on('progress', (msg) => {
+            console.log(msg);
+        });
     },
     query: (args) => {
-        ffdk.queryInstalledPackages(devConfig, (data) => {
+        ffdk.queryInstalledPackages(devConfig, (err, data) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
             data.queryResponse.forEach((item) => {
                 console.log(`${item.name}\t${item.version}\t${item.packageName}`);
             });
         });
     },
     uninstall: (args) => {
-        ffdk.uninstallPackage(devConfig, args.pop());
+        ffdk.uninstallPackage(devConfig, args.pop(), (err) => {
+            if (err) console.log(err);
+        });
     }
 };
 
