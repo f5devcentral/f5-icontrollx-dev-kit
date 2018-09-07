@@ -1,5 +1,5 @@
 # ffdk
-f5 iApp Development Kit
+f5 iControl LX Development Kit
 
 ## Introduction
 
@@ -76,9 +76,14 @@ The devconfig.json file looks like this, and may be different for each developer
 {
     "HOST": "IP address or DNS name of your target BigIP",
     "USER": "your big ip username",
-    "PASS": "your big ip password",
+    "PASS": "your big ip password"
 }
 ```
+
+Alternatively, you can specify these parameters as environment variables. This may be useful for CI/CD flows. If the devconfig file exists, these variables will be ignored.
+- `FFDK_HOST`
+- `FFDK_USER`
+- `FFDK_PASS`
 
 An example rest worker is added to the project, skeleton worker, this file can be modified to fit your needs, used as reference, or discarded altogether. When deployed, it will add a new rest endpoint at `/mgmt/shared/hello` by default.
 
@@ -124,20 +129,68 @@ At the time of writing, ffdk is not installable as an npm package yet, but can b
 
 WARNING: This functionalty is pre-alpha and the API is subject to change!
 
+### ffdk.initializeProject(path [, callback])
+
+- `path` - a string specifying the location of the new project
+- `callback(error)` - invoked when finished
+  - `error` - contains error object, or null on success
+
+This function will copy project files, create folders, and invoke `npm init` inside `./src/nodejs`
+
 ```
 const ffdk = require('ffdk')
 
 // initialize a project in the current working directory
-ffdk.initializeProject();
+const initPath = process.cwd();
 
-// build an rpm using the spec file in process.cwd()
-const done = () => {
-  console.log('Finished!');
-};
+ffdk.initializeProject(initPath, (err) => {
+  if (err)
+    console.error(err)
+  else
+    console.log(`New project initialized at ${initPath}`);
+} );
+```
 
-ffdk.buildRpm(done);
+### ffdk.buildRpm(path[, opts][, callback])
 
+- `path` - path to directory to invoke rpmbuild
+- `opts` - optionally specify rpm options
+  - `rpmSpecfile` - rpm `.spec` file to use, defaults to `f5-project.spec`
+  - `destDir` - destination where new RPM will be copied, defaults to `${path}/build`
+- `callback(error)` - invoked when finished
+  - `error` - contains error object, or null on sucess
+  - `stdout` - stdout from the rpmbuild process
 
+This function will invoke rpmbuild using the default spec file, or the spec file specified in the options. The resulting rpm will placed in `./build`, or the directory specified in opts.
+
+```
+// build an rpm using the default spec file in cwd
+const path = process.cwd();
+
+ffdk.buildRpm(rpmPath, (err, stdout) => {
+  if (err) {
+    console.error(err)
+  } else {
+    console.log(stdout);
+    console.log(`New RPM copied to ${initPath}/build`);
+  }
+});
+```
+
+### ffdk.deployToBigIp(config, filename [, callback])
+
+- `config` - config object containing HOST, USER, and PASS for HTTP using basic auth
+- `filename` - filename of the RPM to deploy
+- `callback(error)` - called upon error, or successful deployment
+  - `error` - error object, or null on success
+
+returns `EventEmitter` with the following events:
+- `progress` - fired when a chunk is uploaded to the BigIp
+  - `msg` - file upload progress information
+
+This function will upload and install an iControl LX extension RPM to the BigIp specified in the config object.
+
+```
 // Upload an RPM to a host BigIP
 const opts = {
    HOST: "127.0.0.1",
@@ -145,33 +198,37 @@ const opts = {
    PASS: "admin"
 }
 
-ffdk.copyToHost(opts, done);
+// Using and install a local RPM
+const rpmPath = '/local/path/to/project.rpm'
 
+ffdk.deployToBigIp(opts, rpmPath, );
+```
 
-// poll the status of a pending iControl LX task
-// task_link is aquired from the body of the initiating HTTP request
-ffdk.pollTaskStatus(opts, task_link, done);
+### ffdk.queryInstalledPackages(config, callback)
 
+- `config` - BigIP location and user credentials
+- `callback(results)` - called when finished
+  - `results` - contains query results
 
-// Install an RPM that has been copied to the BigIP
-const rpmPath = '/var/config/rest/downloads/project.rpm'
+This function queries the BigIP for installed packages.
 
-ffdk.installRpmOnBigIp(opts, rpmPath, done);
-
-
-// Upload and install a local RPM
-opts.rpmPath = '/local/path/to/project.rpm'
-ffdk.deployToBigIp(opts);
-
-
+```
 // list installed packages
-const callback = (queryResult) => {
-  console.log(queryResult);
-};
+ffdk.queryInstalledPackages(opts, (queryResults) => {
+  console.log(queryResults);
+});
+```
 
-ffdk.queryInstalledPackages(opts, callback);
+### ffdk.uninstallPackage(config, packageName[, callback])
 
+- `config` - BigIP location and user credentials
+- `packageName` - package on BigIP to remove, can be fetched with query. Usually has a `.noarch` extension.
+- `callback(error)` - called on error, or when finished
+  - `error` - error object when call unsuccessful
 
+This function will uninstall a package from the BigIP.
+
+```
 // uninstall packageName, package names available from ffdk.query
 const packageName = 'project.noarch'
 ffdk.uninstallPackage(opts, packageName);
