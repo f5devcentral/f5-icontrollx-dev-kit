@@ -17,8 +17,12 @@ const devConfig = (() => {
     try {
         return require(process.cwd()+'/devconfig.json');
     } catch(e) {
-        console.log('no devconfig found');
-        return {};
+        console.log('no devconfig found, trying environment variables');
+        return {
+            HOST: process.env.FFDK_HOST,
+            USER: process.env.FFDK_USER,
+            PASS: process.env.FFDK_PASS
+        };
     }
 })();
 
@@ -27,7 +31,19 @@ const op = args.shift();
 
 const ops = {
     init: (args) => {
-        ffdk.initializeProject()
+        const initPath = args.pop() || process.cwd();
+        console.log(`Initializing project at ${initPath}`);
+        ffdk.initializeProject(initPath, (err) => {
+            if (err) {
+                if (err.code === 'ENOENT') {
+                    console.error(`${err.path} could not be found, is it installed?`);
+                } else {
+                    console.error('ERROR: ', err);
+                }
+            } else {
+                console.log(`Project created at ${initPath}!`);
+            }
+        });
     },
     build: (args) => {
         ffdk.buildRpm();
