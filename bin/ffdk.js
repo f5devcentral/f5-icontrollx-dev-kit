@@ -46,7 +46,16 @@ const ops = {
         });
     },
     build: (args) => {
-        ffdk.buildRpm();
+        const opts = { rpmSpecfile: args.pop() }
+        ffdk.buildRpm(process.cwd(), opts, (err) => {
+            if (err) {
+                console.error(err);
+                if (err.code === 127)
+                    console.error('Is rpmbuild installed?');
+            } else {
+                console.log(`created ${ffdk.fetchLatestBuild(process.cwd()+'/build')}`);
+            }
+        });
     },
     deploy: (args) => {
         const target_build = (() => {
@@ -58,7 +67,7 @@ const ops = {
                     return rpm_path;
             }
 
-            return process.cwd() + '/build/' + ffdk.fetchLatestBuild('./build');
+            return ffdk.fetchLatestBuild('./build');
         })();
 
         const opts = {};
