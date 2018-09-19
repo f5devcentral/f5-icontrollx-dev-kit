@@ -8,7 +8,7 @@ The purpose of this project is to streamline the initial steps in creating and d
 This dev kit enables the following options on the command line or within a Node.js application:
 
 - `init` - Creates folder structure and RPM Spec file for a new iControl LX Extension
-- `build` - Builds and RPM package for installation on BIG-IP
+- `build` - Builds an RPM package for installation on BIG-IP
 - `deploy` - Automatically uploads and installs an iControl LX Extension RPM on BIG-IP
 - `query` - Query installed iControl LX Extensions
 - `uninstall` - Uninstall iControl LX Extensions by package name (obtained by `query`)
