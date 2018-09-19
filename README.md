@@ -34,6 +34,10 @@ Or, a symlink can be created in your path, for example:
 
 `ln -s /LOCAL/PATH/TO/FFDK/REPO/bin/ffdk.js /usr/local/bin/ffdk`
 
+or as a node module...
+
+`npm install ffdk@https://github.com/f5devcentral/f5-icontrollx-dev-kit.git`
+
 ## QuickStart
 
 Follow the installation directions above. 
@@ -134,9 +138,7 @@ Packages can be uninstalled using the `ffdk uninstall` command. Removing a packa
 
 In addition to command line use, the ffdk package can be used as a node module in other applications.
 
-At the time of writing, ffdk is not installable as an npm package yet, but can be copied into your node_modules path and required.
-
-WARNING: This functionalty is pre-alpha and the API is subject to change!
+`npm install ffdk@https://github.com/f5devcentral/f5-icontrollx-dev-kit.git`
 
 ### ffdk.initializeProject(path [, callback])
 
