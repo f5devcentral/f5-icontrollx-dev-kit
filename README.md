@@ -3,7 +3,16 @@ f5 iControl LX Development Kit
 
 ## Introduction
 
-The purpose of this project is to streamline the initial steps in creating and deploying a new iControl LX Extension. ffdk provides a CLI utility for initializing, building, and deploying Node.js code on BIG-IP. It can also be also be used as a module for other Node.js applications that manage iControl LX packages. 
+The purpose of this project is to streamline the initial steps in creating and deploying a new iControl LX Extension. ffdk provides a CLI utility for initializing, building, and deploying Node.js code on BIG-IP. It can also be also be used as a module for other Node.js applications that manage iControl LX packages.
+
+This dev kit enables the following options on the command line or within a Node.js application:
+
+- `init` - Creates folder structure and RPM Spec file for a new iControl LX Extension
+- `build` - Builds and RPM package for installation on BIG-IP
+- `deploy` - Automatically uploads and installs an iControl LX Extension RPM on BIG-IP
+- `query` - Query installed iControl LX Extensions
+- `uninstall` - Uninstall iControl LX Extensions by package name (obtained by `query`)
+
 
 ## Installation
 
