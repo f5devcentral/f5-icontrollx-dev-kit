@@ -1,7 +1,7 @@
 {
   "name": "ffdk",
   "version": "1.0.0",
-  "description": "F5 iApp development kit",
+  "description": "F5 iControl LX Development Kit",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

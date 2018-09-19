@@ -3,11 +3,11 @@ f5 iControl LX Development Kit
 
 ## Introduction
 
-The purpose of this project is to streamline the initial steps in creating and deploying a new iApp project. ffdk provides a CLI utility for initializing, building, and deploying iApps. It can also be used as a module for other Node.js applications.
+The purpose of this project is to streamline the initial steps in creating and deploying a new iControl LX Extension. ffdk provides a CLI utility for initializing, building, and deploying Node.js code on BIG-IP. It can also be also be used as a module for other Node.js applications that manage iControl LX packages. 
 
 ## Installation
 
-ffdk has commands to initialize, build, and deploy a project to development BigIP.
+ffdk has commands to initialize, build, and deploy a project to a BIG-IP.
 
 Prerequisite:
 
@@ -38,20 +38,20 @@ $ ffdk init
 
 $ ffdk build
 
-## edit devconfig.json to configure target BigIP and auth credentials
+## edit devconfig.json to configure target BIG-IP and auth credentials
 
 $ ffdk deploy
 
-## test your deployed iApp!
+## test your deployed application!
 ```
 
 ## Using ffdk on the Command Line
 
-One the ffdk command is aliased or added to your path, you are ready to create and deploy your iApp.
+Once the ffdk command is aliased or added to your path, you are ready to create and deploy a new iControl LX Extension.
 
 ### ffdk init
 
-The initialize a new project, create a new directory and initialize te project inside that directory:
+To initialize a new project, create a new directory and initialize te project inside that directory:
 
 ```
 $ mkdir hello_world
@@ -63,8 +63,8 @@ This will create the appropriate file hierarchy, create some basic configuration
 
 ```
 ./f5-project.spec                  ## RPM spec file for building deployment package, populated with information from package.json
-./devconfig.json                   ## development config file for specifying target dev bigip and credentials usd by CLI utility
-./src                              ## this is the root directory of the iapp, and the structure inside should confirm to the iControlLX iApp specificaton
+./devconfig.json                   ## development config file for specifying target dev BIG-IP and credentials usd by CLI utility
+./src                              ## this is the root directory of the extension, and the structure inside should confirm to the iControlLX Extension specificaton
 ./src/nodejs                     
 ./src/nodejs/skeletonWorker.js     ## A basic rest worker example, this can be modified or deleted
 ./src/nodejs/package.json          ## package.json created by npm, dependant modules should be installed within this directory
@@ -74,7 +74,7 @@ The devconfig.json file looks like this, and may be different for each developer
 
 ```
 {
-    "HOST": "IP address or DNS name of your target BigIP",
+    "HOST": "IP address or DNS name of your target BIG-IP",
     "USER": "your big ip username",
     "PASS": "your big ip password"
 }
@@ -89,7 +89,7 @@ An example rest worker is added to the project, skeleton worker, this file can b
 
 ### ffdk build
 
-Once you are ready to run your project on a BigIP, you can build a deployable RPM with:
+Once you are ready to run your project on a BIG-IP, you can build a deployable RPM with:
 
 `ffdk build`
 
@@ -97,13 +97,13 @@ This will build an rpm and output it to a `build/` folder within your directory.
 
 ### ffdk deploy
 
-After the project is successfully built, it can be deployed to the BigIP by typing:
+After the project is successfully built, it can be deployed to a BIG-IP by typing:
 
 `ffdk deploy`
 
 Now you can use your favorite HTTP client to test your new endpoint.
 
-when used with no arguments, `deploy` will look inside the `./build` directory where it is run, and copy and install the newest RPM to the BigIP configured in `devconfig.json`.
+when used with no arguments, `deploy` will look inside the `./build` directory where it is run, and copy and install the newest RPM to a BIG-IP configured in `devconfig.json`.
 
 #### Installing a specific RPM
 
@@ -113,7 +113,7 @@ The `deploy` target can also be used to install any arbitrary RPM by specifying 
 
 ### ffdk query
 
-`ffdk query` will list the packages installed on the configured BigIP. These package names can be passd to `ffdk uninstall` to remove them from the BigIP.
+`ffdk query` will list the packages installed on the configured BIG-IP. These package names can be passd to `ffdk uninstall` to remove them from a BIG-IP.
 
 ### ffdk uninstall
 
@@ -185,13 +185,13 @@ ffdk.buildRpm(rpmPath, (err, stdout) => {
   - `error` - error object, or null on success
 
 returns `EventEmitter` with the following events:
-- `progress` - fired when a chunk is uploaded to the BigIp
+- `progress` - fired when a chunk is uploaded to a BIG-IP
   - `msg` - file upload progress information
 
-This function will upload and install an iControl LX extension RPM to the BigIp specified in the config object.
+This function will upload and install an iControl LX extension RPM to a BIG-IP specified in the config object.
 
 ```
-// Upload an RPM to a host BigIP
+// Upload an RPM to a host BIG-IP
 const opts = {
    HOST: "127.0.0.1",
    USER: "admin",
@@ -206,11 +206,11 @@ ffdk.deployToBigIp(opts, rpmPath, );
 
 ### ffdk.queryInstalledPackages(config, callback)
 
-- `config` - BigIP location and user credentials
+- `config` - BIG-IP location and user credentials
 - `callback(results)` - called when finished
   - `results` - contains query results
 
-This function queries the BigIP for installed packages.
+This function queries a BIG-IP for installed packages.
 
 ```
 // list installed packages
@@ -221,12 +221,12 @@ ffdk.queryInstalledPackages(opts, (queryResults) => {
 
 ### ffdk.uninstallPackage(config, packageName[, callback])
 
-- `config` - BigIP location and user credentials
-- `packageName` - package on BigIP to remove, can be fetched with query. Usually has a `.noarch` extension.
+- `config` - BIG-IP location and user credentials
+- `packageName` - package on BIG-IP to remove, can be fetched with query. Usually has a `.noarch` extension.
 - `callback(error)` - called on error, or when finished
   - `error` - error object when call unsuccessful
 
-This function will uninstall a package from the BigIP.
+This function will uninstall a package from a BIG-IP.
 
 ```
 // uninstall packageName, package names available from ffdk.query
@@ -236,7 +236,7 @@ ffdk.uninstallPackage(opts, packageName);
 
 ## Debugging applications
 
-Applications can be debugged by inspecting logs. By logging into the BigIP's bash console, you can read the most recent log with the following commands:
+Applications can be debugged by inspecting logs. By logging into a BIG-IP's bash console, you can read the most recent log with the following commands:
 
 `less +F /var/logs/restnoded/restnoded.log`
 
