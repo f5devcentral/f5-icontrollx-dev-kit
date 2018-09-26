@@ -1,9 +1,9 @@
-# ffdk
+# icrdk
 f5 iControl LX Development Kit
 
 ## Introduction
 
-The purpose of this project is to streamline the initial steps in creating and deploying a new iControl LX Extension. ffdk provides a CLI utility for initializing, building, and deploying Node.js code on BIG-IP. It can also be also be used as a module for other Node.js applications that manage iControl LX packages.
+The purpose of this project is to streamline the initial steps in creating and deploying a new iControl LX Extension. icrdk provides a CLI utility for initializing, building, and deploying Node.js code on BIG-IP. It can also be also be used as a module for other Node.js applications that manage iControl LX packages.
 
 This dev kit enables the following options on the command line or within a Node.js application:
 
@@ -16,7 +16,7 @@ This dev kit enables the following options on the command line or within a Node.
 
 ## Installation
 
-ffdk has commands to initialize, build, and deploy a project to a BIG-IP.
+icrdk has commands to initialize, build, and deploy a project to a BIG-IP.
 
 Prerequisite:
 
@@ -26,17 +26,17 @@ Clone the repo:
 
 `git clone git://REMOTE_REPO_URL`
 
-Next, add ffdk command, this can be achieved in one of two ways:
+Next, add icrdk command, this can be achieved in one of two ways:
 
-`alias ffdk=/LOCAL/PATH/TO/FFDK/REPO/bin/ffdk.js`
+`alias icrdk=/LOCAL/PATH/TO/ICRDK/REPO/bin/icrdk.js`
 
 Or, a symlink can be created in your path, for example:
 
-`ln -s /LOCAL/PATH/TO/FFDK/REPO/bin/ffdk.js /usr/local/bin/ffdk`
+`ln -s /LOCAL/PATH/TO/ICRDK/REPO/bin/icrdk.js /usr/local/bin/icrdk`
 
 or as a node module...
 
-`npm install ffdk@https://github.com/f5devcentral/f5-icontrollx-dev-kit.git`
+`npm install icrdk@https://github.com/f5devcentral/f5-icontrollx-dev-kit.git`
 
 ## QuickStart
 
@@ -45,31 +45,31 @@ Follow the installation directions above.
 ```
 $ mkdir project_name
 $ cd project_name
-$ ffdk init
+$ icrdk init
 
 ## edit project files inside src/nodejs
 
-$ ffdk build
+$ icrdk build
 
 ## edit devconfig.json to configure target BIG-IP and auth credentials
 
-$ ffdk deploy
+$ icrdk deploy
 
 ## test your deployed application!
 ```
 
-## Using ffdk on the Command Line
+## Using icrdk on the Command Line
 
-Once the ffdk command is aliased or added to your path, you are ready to create and deploy a new iControl LX Extension.
+Once the icrdk command is aliased or added to your path, you are ready to create and deploy a new iControl LX Extension.
 
-### ffdk init
+### icrdk init
 
 To initialize a new project, create a new directory and initialize te project inside that directory:
 
 ```
 $ mkdir hello_world
 $ cd hello_world
-$ ffdk init
+$ icrdk init
 ```
 
 This will create the appropriate file hierarchy, create some basic configuration files, and run npm init.
@@ -94,25 +94,25 @@ The devconfig.json file looks like this, and may be different for each developer
 ```
 
 Alternatively, you can specify these parameters as environment variables. This may be useful for CI/CD flows. If the devconfig file exists, these variables will be ignored.
-- `FFDK_HOST`
-- `FFDK_USER`
-- `FFDK_PASS`
+- `ICRDK_HOST`
+- `ICRDK_USER`
+- `ICRDK_PASS`
 
 An example rest worker is added to the project, skeleton worker, this file can be modified to fit your needs, used as reference, or discarded altogether. When deployed, it will add a new rest endpoint at `/mgmt/shared/hello` by default.
 
-### ffdk build
+### icrdk build
 
 Once you are ready to run your project on a BIG-IP, you can build a deployable RPM with:
 
-`ffdk build`
+`icrdk build`
 
 This will build an rpm and output it to a `build/` folder within your directory. By default, rpms are versioned using a unix timestamp.
 
-### ffdk deploy
+### icrdk deploy
 
 After the project is successfully built, it can be deployed to a BIG-IP by typing:
 
-`ffdk deploy`
+`icrdk deploy`
 
 Now you can use your favorite HTTP client to test your new endpoint.
 
@@ -122,25 +122,25 @@ when used with no arguments, `deploy` will look inside the `./build` directory w
 
 The `deploy` target can also be used to install any arbitrary RPM by specifying it at the command line like so:
 
-`ffdk deploy /path/to/your/package.rpm`
+`icrdk deploy /path/to/your/package.rpm`
 
-### ffdk query
+### icrdk query
 
-`ffdk query` will list the packages installed on the configured BIG-IP. These package names can be passd to `ffdk uninstall` to remove them from a BIG-IP.
+`icrdk query` will list the packages installed on the configured BIG-IP. These package names can be passd to `icrdk uninstall` to remove them from a BIG-IP.
 
-### ffdk uninstall
+### icrdk uninstall
 
-Packages can be uninstalled using the `ffdk uninstall` command. Removing a package can be achievd by passing a package name from `ffdk query` to the `uninstall` target like so:
+Packages can be uninstalled using the `icrdk uninstall` command. Removing a package can be achievd by passing a package name from `icrdk query` to the `uninstall` target like so:
 
-`ffdk uninstall package.noarch`
+`icrdk uninstall package.noarch`
 
-## Using ffdk as a module
+## Using icrdk as a module
 
-In addition to command line use, the ffdk package can be used as a node module in other applications.
+In addition to command line use, the icrdk package can be used as a node module in other applications.
 
-`npm install ffdk@https://github.com/f5devcentral/f5-icontrollx-dev-kit.git`
+`npm install icrdk@https://github.com/f5devcentral/f5-icontrollx-dev-kit.git`
 
-### ffdk.initializeProject(path [, callback])
+### icrdk.initializeProject(path [, callback])
 
 - `path` - a string specifying the location of the new project
 - `callback(error)` - invoked when finished
@@ -149,12 +149,12 @@ In addition to command line use, the ffdk package can be used as a node module i
 This function will copy project files, create folders, and invoke `npm init` inside `./src/nodejs`
 
 ```
-const ffdk = require('ffdk')
+const icrdk = require('icrdk')
 
 // initialize a project in the current working directory
 const initPath = process.cwd();
 
-ffdk.initializeProject(initPath, (err) => {
+icrdk.initializeProject(initPath, (err) => {
   if (err)
     console.error(err)
   else
@@ -162,7 +162,7 @@ ffdk.initializeProject(initPath, (err) => {
 } );
 ```
 
-### ffdk.buildRpm(path[, opts][, callback])
+### icrdk.buildRpm(path[, opts][, callback])
 
 - `path` - path to directory to invoke rpmbuild
 - `opts` - optionally specify rpm options
@@ -178,7 +178,7 @@ This function will invoke rpmbuild using the default spec file, or the spec file
 // build an rpm using the default spec file in cwd
 const path = process.cwd();
 
-ffdk.buildRpm(rpmPath, (err, stdout) => {
+icrdk.buildRpm(rpmPath, (err, stdout) => {
   if (err) {
     console.error(err)
   } else {
@@ -188,7 +188,7 @@ ffdk.buildRpm(rpmPath, (err, stdout) => {
 });
 ```
 
-### ffdk.deployToBigIp(config, filename [, callback])
+### icrdk.deployToBigIp(config, filename [, callback])
 
 - `config` - config object containing HOST, USER, and PASS for HTTP using basic auth
 - `filename` - filename of the RPM to deploy
@@ -212,10 +212,10 @@ const opts = {
 // Using and install a local RPM
 const rpmPath = '/local/path/to/project.rpm'
 
-ffdk.deployToBigIp(opts, rpmPath, );
+icrdk.deployToBigIp(opts, rpmPath, );
 ```
 
-### ffdk.queryInstalledPackages(config, callback)
+### icrdk.queryInstalledPackages(config, callback)
 
 - `config` - BIG-IP location and user credentials
 - `callback(results)` - called when finished
@@ -225,12 +225,12 @@ This function queries a BIG-IP for installed packages.
 
 ```
 // list installed packages
-ffdk.queryInstalledPackages(opts, (queryResults) => {
+icrdk.queryInstalledPackages(opts, (queryResults) => {
   console.log(queryResults);
 });
 ```
 
-### ffdk.uninstallPackage(config, packageName[, callback])
+### icrdk.uninstallPackage(config, packageName[, callback])
 
 - `config` - BIG-IP location and user credentials
 - `packageName` - package on BIG-IP to remove, can be fetched with query. Usually has a `.noarch` extension.
@@ -240,9 +240,9 @@ ffdk.queryInstalledPackages(opts, (queryResults) => {
 This function will uninstall a package from a BIG-IP.
 
 ```
-// uninstall packageName, package names available from ffdk.query
+// uninstall packageName, package names available from icrdk.query
 const packageName = 'project.noarch'
-ffdk.uninstallPackage(opts, packageName);
+icrdk.uninstallPackage(opts, packageName);
 ```
 
 ## Debugging applications
@@ -256,3 +256,8 @@ Any javascript errors will be reported here, as well as the output from the f5lo
 It is possible to use `console.log()` for ad hoc debug messages, that information can be read by using:
 
 `less +F /var/tmp/restnoded.out`
+
+## Revisions
+
+1.0.1
+- Renamed package from 'ffdk' to 'icrdk'

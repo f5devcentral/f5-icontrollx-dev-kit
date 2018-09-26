@@ -1,6 +1,6 @@
 {
-  "name": "ffdk",
-  "version": "1.0.0",
+  "name": "icrdk",
+  "version": "1.0.1",
   "description": "F5 iControl LX Development Kit",
   "main": "index.js",
   "scripts": {

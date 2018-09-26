@@ -2,7 +2,7 @@
 
 'use strict';
 
-const ffdk = require('../');
+const icrdk = require('../');
 
 const ERR_MESSAGE = `
 Please create a file in this directory called 'devconfig.json', it should look like this:
@@ -19,9 +19,9 @@ const devConfig = (() => {
     } catch(e) {
         console.log('no devconfig found, trying environment variables');
         return {
-            HOST: process.env.FFDK_HOST,
-            USER: process.env.FFDK_USER,
-            PASS: process.env.FFDK_PASS
+            HOST: process.env.ICRDK_HOST,
+            USER: process.env.ICRDK_USER,
+            PASS: process.env.ICRDK_PASS
         };
     }
 })();
@@ -33,7 +33,7 @@ const ops = {
     init: (args) => {
         const initPath = args.pop() || process.cwd();
         console.log(`Initializing project at ${initPath}`);
-        ffdk.initializeProject(initPath, (err) => {
+        icrdk.initializeProject(initPath, (err) => {
             if (err) {
                 if (err.code === 'ENOENT') {
                     console.error(`${err.path} could not be found, is it installed?`);
@@ -47,13 +47,13 @@ const ops = {
     },
     build: (args) => {
         const opts = { rpmSpecfile: args.pop() }
-        ffdk.buildRpm(process.cwd(), opts, (err) => {
+        icrdk.buildRpm(process.cwd(), opts, (err) => {
             if (err) {
                 console.error(err);
                 if (err.code === 127)
                     console.error('Is rpmbuild installed?');
             } else {
-                console.log(`created ${ffdk.fetchLatestBuild(process.cwd()+'/build')}`);
+                console.log(`created ${icrdk.fetchLatestBuild(process.cwd()+'/build')}`);
             }
         });
     },
@@ -67,11 +67,11 @@ const ops = {
                     return rpm_path;
             }
 
-            return ffdk.fetchLatestBuild('./build');
+            return icrdk.fetchLatestBuild('./build');
         })();
 
         console.log(`Deploying ${target_build}`);
-        const progress = ffdk.deployToBigIp(devConfig, target_build, (err) => {
+        const progress = icrdk.deployToBigIp(devConfig, target_build, (err) => {
             if (err) {
                 console.error(err);
             } else {
@@ -84,7 +84,7 @@ const ops = {
         });
     },
     query: (args) => {
-        ffdk.queryInstalledPackages(devConfig, (err, data) => {
+        icrdk.queryInstalledPackages(devConfig, (err, data) => {
             if (err) {
                 console.error(err);
                 return;
@@ -95,7 +95,7 @@ const ops = {
         });
     },
     uninstall: (args) => {
-        ffdk.uninstallPackage(devConfig, args.pop(), (err) => {
+        icrdk.uninstallPackage(devConfig, args.pop(), (err) => {
             if (err) console.log(err);
         });
     }
