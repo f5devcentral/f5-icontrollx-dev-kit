@@ -89,6 +89,10 @@ const ops = {
                 console.error(err);
                 return;
             }
+            if (data.queryResponse.length <= 0) {
+                console.log('No installed packages.');
+                return;
+            }
             data.queryResponse.forEach((item) => {
                 console.log(`${item.name}\t${item.version}\t${item.packageName}`);
             });
