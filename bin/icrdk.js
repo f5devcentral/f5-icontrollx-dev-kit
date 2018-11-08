@@ -89,6 +89,10 @@ const ops = {
                 console.error(err);
                 return;
             }
+            if (data.queryResponse.length <= 0) {
+                console.log('No installed packages.');
+                return;
+            }
             data.queryResponse.forEach((item) => {
                 console.log(`${item.name}\t${item.version}\t${item.packageName}`);
             });
@@ -97,6 +101,12 @@ const ops = {
     uninstall: (args) => {
         icrdk.uninstallPackage(devConfig, args.pop(), (err) => {
             if (err) console.log(err);
+        });
+    },
+    get: (args) => {
+        icrdk.get(devConfig, args.pop(), (err, data) => {
+            if (err) console.error(err)
+            else console.log(data);
         });
     }
 };

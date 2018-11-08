@@ -87,9 +87,10 @@ The devconfig.json file looks like this, and may be different for each developer
 
 ```
 {
-    "HOST": "IP address or DNS name of your target BIG-IP",
-    "USER": "your big ip username",
-    "PASS": "your big ip password"
+    "HOST": "(Required) IP address or DNS name of your target BIG-IP",
+    "USER": "(Required) BIG-IP basic auth username",
+    "PASS": "(Required) BIG-IP basic auth password",
+    "PORT": "(Optional) BIG-IP managment port, default is 443"
 }
 ```
 
