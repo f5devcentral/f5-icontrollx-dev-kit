@@ -102,6 +102,12 @@ const ops = {
         icrdk.uninstallPackage(devConfig, args.pop(), (err) => {
             if (err) console.log(err);
         });
+    },
+    get: (args) => {
+        icrdk.get(devConfig, args.pop(), (err, data) => {
+            if (err) console.error(err)
+            else console.log(data);
+        });
     }
 };
 
