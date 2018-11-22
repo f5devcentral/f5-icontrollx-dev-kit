@@ -7,5 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Matthew Zinke <m.zinke@f5.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "bin" : {
+    "icrdk" : "bin/icrdk.js"
+  }
 }
