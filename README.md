@@ -22,21 +22,11 @@ Prerequisite:
 
 `rpmbuild` must be installed on the machine where it is being used.
 
-Clone the repo:
-
-`git clone git://REMOTE_REPO_URL`
-
-Next, add icrdk command, this can be achieved in one of two ways:
-
-`alias icrdk=/LOCAL/PATH/TO/ICRDK/REPO/bin/icrdk.js`
-
-Or, a symlink can be created in your path, for example:
-
-`ln -s /LOCAL/PATH/TO/ICRDK/REPO/bin/icrdk.js /usr/local/bin/icrdk`
-
-or as a node module...
+Install:
 
 `npm install icrdk@https://github.com/f5devcentral/f5-icontrollx-dev-kit.git`
+
+Use the -g flag to add `icrdk` to your path and have it globally available.
 
 ## QuickStart
 
