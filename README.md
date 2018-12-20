@@ -139,7 +139,7 @@ In addition to command line use, the icrdk package can be used as a node module 
 
 This function will copy project files, create folders, and invoke `npm init` inside `./src/nodejs`
 
-```
+```javascript
 const icrdk = require('icrdk')
 
 // initialize a project in the current working directory
@@ -165,7 +165,7 @@ icrdk.initializeProject(initPath, (err) => {
 
 This function will invoke rpmbuild using the default spec file, or the spec file specified in the options. The resulting rpm will placed in `./build`, or the directory specified in opts.
 
-```
+```javascript
 // build an rpm using the default spec file in cwd
 const path = process.cwd();
 
@@ -192,12 +192,13 @@ returns `EventEmitter` with the following events:
 
 This function will upload and install an iControl LX extension RPM to a BIG-IP specified in the config object.
 
-```
+```javascript
 // Upload an RPM to a host BIG-IP
 const opts = {
    HOST: "127.0.0.1",
    USER: "admin",
-   PASS: "admin"
+   PASS: "admin",
+   AUTH_TOKEN: "token" // optional, use instead of USER/PASS
 }
 
 // Using and install a local RPM
